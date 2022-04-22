@@ -1,0 +1,10 @@
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.exe.config
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.exe
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.pdb
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csprojAssemblyReference.cache
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.SettingMain.resources
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.Properties.Resources.resources
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.GenerateResource.cache
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.CoreCompileInputs.cache
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.exe
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.pdb
