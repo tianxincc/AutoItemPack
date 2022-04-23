@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("AutoItemPack")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("自动更新")]
+[assembly: AssemblyDescription("一个多功能数据更新工具箱")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AutoItemPack")]
+[assembly: AssemblyCompany("tianxincc")]
+[assembly: AssemblyProduct("自动更新")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

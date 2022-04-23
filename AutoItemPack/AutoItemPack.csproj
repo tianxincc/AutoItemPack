@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>image\nimen.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CmdHelp.cs" />
+    <Compile Include="Common\Register\RegistryStorageHelper.cs" />
+    <Compile Include="Common\Register\RegistryStorageKeys.cs" />
+    <Compile Include="Common\PathHelpStatus.cs" />
     <Compile Include="SettingMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,7 +84,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="image\nimen.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

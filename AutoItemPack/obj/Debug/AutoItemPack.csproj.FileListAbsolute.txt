@@ -8,3 +8,13 @@ D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj
 D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.CoreCompileInputs.cache
 D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.exe
 D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.pdb
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.exe
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.AssemblyReference.cache
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.SuggestedBindingRedirects.cache
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.SettingMain.resources
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.Properties.Resources.resources
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.GenerateResource.cache
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.CoreCompileInputs.cache
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.exe
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.pdb
+E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.pdb
