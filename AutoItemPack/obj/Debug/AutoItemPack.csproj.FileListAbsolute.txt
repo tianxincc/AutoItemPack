@@ -1,4 +1,3 @@
-D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.exe.config
 D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.exe
 D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.pdb
 D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csprojAssemblyReference.cache

@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CmdHelp.cs" />
+    <Compile Include="Common\SQLHelper.cs" />
+    <Compile Include="Common\FtpHelper.cs" />
     <Compile Include="Common\Register\RegistryStorageHelper.cs" />
     <Compile Include="Common\Register\RegistryStorageKeys.cs" />
     <Compile Include="Common\PathHelpStatus.cs" />
