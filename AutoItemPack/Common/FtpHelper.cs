@@ -1,4 +1,5 @@
-﻿using Common.Register;
+﻿using Common;
+using Common.Register;
 
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,31 @@ namespace AutoItemPack.Common
         /// Ftp服务器ip
         /// </summary>
         public static string FtpServerIP = RegistryStorageKeys.StartFTPIPKeyStr;
+
+        /// <summary>
+        /// Ftp 端口
+        /// </summary>
+        public static string FtpPort = RegistryStorageKeys.StartFTPPortKeyStr;
+
+        /// <summary>
+        /// Ftp 路径
+        /// </summary>
+        public static string FtpPath = RegistryStorageKeys.StartPathKeyStr;
+
+
         /// <summary>
         /// Ftp 指定用户名
         /// </summary>
         public static string FtpUserID = RegistryStorageKeys.StartFTPUserKeyStr;
+
+
         /// <summary>
         /// Ftp 指定用户密码
         /// </summary>
         public static string FtpPassword = RegistryStorageKeys.StartFTPPwdKeyStr;
 
-        public static string ftpURI = "ftp://" + FtpServerIP + "/";
+        public static string ftpURI = PathHelpStatus.ConnIPStr;
+            //$"ftp://{FtpServerIP}/{FtpPath}/test"; 
 
         #endregion
 
@@ -788,7 +804,7 @@ namespace AutoItemPack.Common
             try
             {
                 // dirName = name of the directory to create.
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI + dirName));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(Path.Combine(ftpURI, dirName)));
                 reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(FtpUserID, FtpPassword);

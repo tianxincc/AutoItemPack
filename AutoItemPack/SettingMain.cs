@@ -19,16 +19,12 @@ namespace AutoItemPack
     public partial class SettingMain : Form
     {
 
-      
-
         public SettingMain()
         {
             InitializeComponent();
             LoadReg();
             LoadStart();
         }
-
-       
 
         /// <summary>
         /// 保存
@@ -65,11 +61,9 @@ namespace AutoItemPack
                 LoadReg();
                 if (SQLHelper.IsTable()) 
                 {
-                    SaveLog($"缺少数据更新表，正在创建...");
+                    SaveLog($"缺少重要数据文件，正在创建...");
                     SQLHelper.CreateFileTable();
                 }
-                textftppth.Text = PathHelpStatus.ConnSQLStr;
-                textsqlpath.Text = PathHelpStatus.ConnIPStr;
                 SaveLog($"初始化成功。");
             }
             catch (Exception ex)
@@ -97,13 +91,13 @@ namespace AutoItemPack
         /// <param name="e"></param>
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            if (RegistryStorageKeys.StationFTPKey.Equals(RegistryStorageKeys.KeyY)) 
+            if (RegistryStorageKeys.StationFTPKeyStr.Equals(RegistryStorageKeys.KeyY)) 
             {
                 GetFileSave(new DirectoryInfo(PathHelpStatus.Path), RegistryStorageKeys.StationFTPKey);
                 SaveLog("已保存文件到FTP远端");
             }
 
-            if (RegistryStorageKeys.StationSQLKey.Equals(RegistryStorageKeys.KeyY))
+            if (RegistryStorageKeys.StationSQLKeyStr.Equals(RegistryStorageKeys.KeyY))
             {
                 SQLHelper.BtnDeleteFile();
                 GetFileSave(new DirectoryInfo(PathHelpStatus.Path), RegistryStorageKeys.StationSQLKey);
@@ -139,7 +133,7 @@ namespace AutoItemPack
         {
             try
             {
-                LoadCtrlName(this,1);
+                LoadCtrlName(this, PathHelpStatus.saveStatus);
                 SaveLog("数据保存成功。");
             }
             catch (Exception ex)
@@ -155,13 +149,19 @@ namespace AutoItemPack
             try
             {
                 txtGUID.Text = PathHelpStatus.guid;
-                LoadCtrlName(this,0);
+                LoadCtrlName(this, PathHelpStatus.loadStatus);
                 SaveLog($"基本数据加载完毕");
             }
             catch (Exception ex)
             {
                 SaveLog($"基本数据加载异常:{ex}");
             }
+        }
+
+        private void JoinPath() 
+        {
+            textftppth.Text = PathHelpStatus.ConnIPStr;
+            textsqlpath.Text = PathHelpStatus.ConnSQLStr;
         }
 
         private void LoadStart() 
@@ -196,6 +196,7 @@ namespace AutoItemPack
                     LoadCtrlName(ctrl,code);
                 }
             }
+            JoinPath();
         }
 
         void SaveLog(string OutTextlog) 
@@ -212,18 +213,19 @@ namespace AutoItemPack
             {
                 if (!string.IsNullOrEmpty(pathname))
                 {
-                    FtpHelper.MakeDir($"{pathname}");
+                    FtpHelper.MakeDir($"{pathname.Substring(1)}");
                 }
             }
             foreach (FileInfo item in files)
             {
-                //if (item.Name.Contains("GetFtpItem.exe"))
-                //{
-                //    continue;
-                //}
+                if (item.Name.Contains("AutoItemPack.exe") || item.Name.Contains("AutoItemPack.pdb"))
+                {
+                    continue;
+                }
+
                 if (RegistryStorageKeys.StationFTPKey.Equals(startStr)) 
                 {
-                    FtpHelper.FtpUploadBroken($"{dirpath}/{item.Name}", $"{Path.Combine(RegistryStorageKeys.StartPathKey, pathname)}");
+                    FtpHelper.FtpUploadBroken($"{dirpath}/{item.Name}", $"{Path.Combine(RegistryStorageKeys.StartPathKeyStr, pathname)}");
                 }
                 if (RegistryStorageKeys.StationSQLKey.Equals(startStr)) 
                 {
@@ -236,6 +238,8 @@ namespace AutoItemPack
                 GetFileSave(new DirectoryInfo(item.FullName), startStr);
             }
         }
+
+
 
     }
 }
