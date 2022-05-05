@@ -10,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,8 @@ namespace AutoItemPack
 {
     public partial class SettingMain : Form
     {
+
+        private static List<FTPFileUoload> fTPFileUoloads = new List<FTPFileUoload>();
 
         public SettingMain()
         {
@@ -94,6 +97,7 @@ namespace AutoItemPack
             if (RegistryStorageKeys.StationFTPKeyStr.Equals(RegistryStorageKeys.KeyY)) 
             {
                 GetFileSave(new DirectoryInfo(PathHelpStatus.Path), RegistryStorageKeys.StationFTPKey);
+                ObjectToJson("FilePath", fTPFileUoloads);
                 SaveLog("已保存文件到FTP远端");
             }
 
@@ -112,12 +116,14 @@ namespace AutoItemPack
         /// <param name="e"></param>
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            if (RegistryStorageKeys.StationFTPKey.Equals(RegistryStorageKeys.KeyY))
+            if (RegistryStorageKeys.StationFTPKeyStr.Equals(RegistryStorageKeys.KeyY))
             {
 
+                SQLHelper.BtnUpdateFileToFTP();
+                
             }
 
-            if (RegistryStorageKeys.StationSQLKey.Equals(RegistryStorageKeys.KeyY))
+            if (RegistryStorageKeys.StationSQLKeyStr.Equals(RegistryStorageKeys.KeyY))
             {
                 if (SQLHelper.BtnIsDownload()) 
                 {
@@ -134,6 +140,7 @@ namespace AutoItemPack
             try
             {
                 LoadCtrlName(this, PathHelpStatus.saveStatus);
+                JoinPath();
                 SaveLog("数据保存成功。");
             }
             catch (Exception ex)
@@ -150,6 +157,7 @@ namespace AutoItemPack
             {
                 txtGUID.Text = PathHelpStatus.guid;
                 LoadCtrlName(this, PathHelpStatus.loadStatus);
+                JoinPath();
                 SaveLog($"基本数据加载完毕");
             }
             catch (Exception ex)
@@ -196,7 +204,6 @@ namespace AutoItemPack
                     LoadCtrlName(ctrl,code);
                 }
             }
-            JoinPath();
         }
 
         void SaveLog(string OutTextlog) 
@@ -209,11 +216,11 @@ namespace AutoItemPack
             FileInfo[] files = dirpath.GetFiles();
             DirectoryInfo[] directories = dirpath.GetDirectories();
             var pathname = dirpath.FullName.Replace($"{PathHelpStatus.Path}", "");
-            if (RegistryStorageKeys.StationFTPKey.Equals(startStr)) 
+            if (RegistryStorageKeys.StationFTPKeyStr.Equals(startStr)) 
             {
                 if (!string.IsNullOrEmpty(pathname))
                 {
-                    FtpHelper.MakeDir($"{pathname.Substring(1)}");
+                    FtpHelper.MakeDir($"{pathname}");
                 }
             }
             foreach (FileInfo item in files)
@@ -223,11 +230,12 @@ namespace AutoItemPack
                     continue;
                 }
 
-                if (RegistryStorageKeys.StationFTPKey.Equals(startStr)) 
+                if (RegistryStorageKeys.StationFTPKeyStr.Equals(startStr)) 
                 {
+                    fTPFileUoloads.Add(new FTPFileUoload { FileName = $"{Path.Combine(pathname, item.Name)}", FilePath = $"{pathname}" });
                     FtpHelper.FtpUploadBroken($"{dirpath}/{item.Name}", $"{Path.Combine(RegistryStorageKeys.StartPathKeyStr, pathname)}");
                 }
-                if (RegistryStorageKeys.StationSQLKey.Equals(startStr)) 
+                if (RegistryStorageKeys.StationSQLKeyStr.Equals(startStr)) 
                 {
                     var infbytes = File.ReadAllBytes(dirpath + "\\" + item.Name);
                     SQLHelper.Save(infbytes, $"{pathname}{item.Name}", DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss"), pathname);
@@ -237,6 +245,41 @@ namespace AutoItemPack
             {
                 GetFileSave(new DirectoryInfo(item.FullName), startStr);
             }
+        }
+
+
+        public static void ObjectToJson<T>(string jsonName, IList<T> IL)
+        {
+            StringBuilder Json = new StringBuilder();
+            Json.Append("{\"" + jsonName + "\":[");
+            if (IL.Count > 0)
+            {
+                for (int i = 0; i < IL.Count; i++)
+                {
+                    T obj = Activator.CreateInstance<T>();
+                    Type type = obj.GetType();
+                    PropertyInfo[] pis = type.GetProperties();
+                    Json.Append("{");
+                    for (int j = 0; j < pis.Length; j++)
+                    {
+                        Json.Append("\"" + pis[j].Name.ToString() + "\":\"" + pis[j].GetValue(IL[i], null) + "\"");
+                        if (j < pis.Length - 1)
+                        {
+                            Json.Append(",");
+                        }
+                    }
+                    Json.Append("}");
+                    if (i < IL.Count - 1)
+                    {
+                        Json.Append(",");
+                    }
+                }
+            }
+            Json.Append("]}");
+            File.WriteAllText($@"{PathHelpStatus.Path}\downloadPath.txt", Json.ToString());
+            FtpHelper.FtpUploadBroken($@"{PathHelpStatus.Path}\downloadPath.txt", RegistryStorageKeys.StartFTPPathKeyStr);
+            //return Json.ToString();
+
         }
 
 

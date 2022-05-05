@@ -17,3 +17,4 @@ E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\Auto
 E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.exe
 E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\bin\Debug\AutoItemPack.pdb
 E:\DevelopmentTool\ProjectItem\C#\Tools\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.pdb
+D:\tianxin\Jekyll\Github\AutoItemPack\AutoItemPack\obj\Debug\AutoItemPack.csproj.CopyComplete

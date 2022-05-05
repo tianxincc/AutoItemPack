@@ -1,6 +1,9 @@
 ﻿using Common;
 using Common.Register;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -27,7 +30,7 @@ namespace AutoItemPack.Common
             using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
             {
                 conn.Open();
-                string sql = $"INSERT INTO UpdateFile([FileImage] ,[FileName] ,[UploadTime],[Guid],[DirFile]) VALUES(@infbytes ,@FileName,@date,@guid,@level,@dirfile)";
+                string sql = $"INSERT INTO UpdateFile([FileImage] ,[FileName] ,[UploadTime],[Guid],[DirFile]) VALUES(@infbytes ,@FileName,@date,@guid,@dirfile)";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
 
@@ -44,7 +47,6 @@ namespace AutoItemPack.Common
 
                     int rows = cmd.ExecuteNonQuery();
                 }
-
             }
         }
 
@@ -75,6 +77,27 @@ namespace AutoItemPack.Common
                         fs.Write((byte[])sdr[0], 0, ((byte[])sdr[0]).Length);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 数据库获更新
+        /// </summary>
+        public static void BtnUpdateFileToFTP()
+        {
+            FtpHelper.FtpDownload(Path.Combine(RegistryStorageKeys.StartPathKeyStr, PathHelpStatus.downloadPath), Path.Combine(PathHelpStatus.Path, PathHelpStatus.downloadPath), true);
+            var json = File.ReadAllText(PathHelpStatus.downloadPath, Encoding.UTF8).Replace(@"\", @"/");
+            var obj = JObject.Parse(json);
+            var JsonsList = JsonConvert.DeserializeObject<List<FTPFileUoload>>(obj["FilePath"].ToString());
+            foreach (var item in JsonsList)
+            {
+                var dirfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, item.FilePath);
+                var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, item.FileName);
+                if (!Directory.Exists(dirfile))
+                {
+                    Directory.CreateDirectory(dirfile);
+                }
+                FtpHelper.FtpDownload(Path.Combine(RegistryStorageKeys.StartPathKeyStr, PathHelpStatus.downloadPath), $"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, item.FileName)}", true);
             }
         }
 
@@ -140,10 +163,19 @@ namespace AutoItemPack.Common
             using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
             {
                 conn.Open();
-                String sql = $" select count(1)   from information_schema.TABLES where TABLE_NAME = 'UpdateFile' ";
+                String sql = $" select count(1) as TableCount   from information_schema.TABLES where TABLE_NAME = 'UpdateFile' ";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader sdr = cmd.ExecuteReader();
-                return sdr.FieldCount > 0 ? false : true;
+                while (sdr.Read()) 
+                {
+                    var FieldCount = sdr["TableCount"];
+                    if ((int)FieldCount > 0)
+                    {
+                        return false;
+                    }
+                        
+                }
+                return true;
             }
         }
 

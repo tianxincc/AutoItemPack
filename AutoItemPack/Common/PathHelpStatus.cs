@@ -6,12 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Common
+namespace AutoItemPack.Common
 {
     public static class PathHelpStatus
     {
         //根路径
-        public static readonly string Path = Directory.GetCurrentDirectory();
+        public static readonly string Path = AppDomain.CurrentDomain.BaseDirectory;
 
         //SQL链接路径
         public static readonly string ConnSQLStr = $"Data Source = {RegistryStorageKeys.StartSQLIPKeyStr}; Initial Catalog = {RegistryStorageKeys.StartSQLDBKeyStr}; Integrated Security = false; User ID = {RegistryStorageKeys.StartSQLUserKeyStr}; Password={RegistryStorageKeys.StartSQLPwdKeyStr}";
@@ -28,7 +28,11 @@ namespace Common
         //加载
         public static readonly int loadStatus = 0;
 
+        //FTP路径文件名称
+        public static readonly string downloadPath = "downloadPath.txt";
         
+
+
 
     }
 
