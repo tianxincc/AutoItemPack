@@ -19,6 +19,9 @@ namespace AutoItemPack.Common
     public static class SQLHelper
     {
         public static string guidstr = "";
+
+
+
         /// <summary>
         /// 保存到数据库
         /// </summary>
@@ -27,7 +30,7 @@ namespace AutoItemPack.Common
         /// <param name="date">时间</param>
         public static void Save(byte[] infbytes, string FileName, string date, string dirfile)
         {
-            using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
+            using (SqlConnection conn = new SqlConnection(RegistryStorageHelper.CommonConnSQLStr()))
             {
                 conn.Open();
                 string sql = $"INSERT INTO UpdateFile([FileImage] ,[FileName] ,[UploadTime],[Guid],[DirFile]) VALUES(@infbytes ,@FileName,@date,@guid,@dirfile)";
@@ -55,7 +58,7 @@ namespace AutoItemPack.Common
         /// </summary>
         public static void BtnUpdateFileToSQL()
         {
-            using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
+            using (SqlConnection conn = new SqlConnection(RegistryStorageHelper.CommonConnSQLStr()))
             {
                 conn.Open();
                 String sql = "select [FileImage] ,[FileName] ,[UploadTime],[DirFile] from UpdateFile";
@@ -85,7 +88,7 @@ namespace AutoItemPack.Common
         /// </summary>
         public static void BtnUpdateFileToFTP()
         {
-            FtpHelper.FtpDownload(Path.Combine(RegistryStorageKeys.StartPathKeyStr, PathHelpStatus.downloadPath), Path.Combine(PathHelpStatus.Path, PathHelpStatus.downloadPath), true);
+            FtpHelper.FtpDownload(Path.Combine(RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StartPathKey), PathHelpStatus.downloadPath), Path.Combine(PathHelpStatus.Path, PathHelpStatus.downloadPath), true);
             var json = File.ReadAllText(PathHelpStatus.downloadPath, Encoding.UTF8).Replace(@"\", @"/");
             var obj = JObject.Parse(json);
             var JsonsList = JsonConvert.DeserializeObject<List<FTPFileUoload>>(obj["FilePath"].ToString());
@@ -97,7 +100,7 @@ namespace AutoItemPack.Common
                 {
                     Directory.CreateDirectory(dirfile);
                 }
-                FtpHelper.FtpDownload(Path.Combine(RegistryStorageKeys.StartPathKeyStr, PathHelpStatus.downloadPath), $"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, item.FileName)}", true);
+                FtpHelper.FtpDownload(Path.Combine(RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StartPathKey), PathHelpStatus.downloadPath), $"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, item.FileName)}", true);
             }
         }
 
@@ -106,7 +109,7 @@ namespace AutoItemPack.Common
         /// </summary>
         public static void BtnDeleteFile()
         {
-            using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
+            using (SqlConnection conn = new SqlConnection(RegistryStorageHelper.CommonConnSQLStr()))
             {
                 conn.Open();
                 String sql = $" truncate TABLE UpdateFile";
@@ -122,7 +125,7 @@ namespace AutoItemPack.Common
         public static bool BtnIsDownload()
         {
             
-            using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
+            using (SqlConnection conn = new SqlConnection(RegistryStorageHelper.CommonConnSQLStr()))
             {
                 conn.Open();
                 string sql = "select [Id],[FileImage] ,[FileName] ,[UploadTime],[Guid] from UpdateFile where [Id]='1'";
@@ -132,7 +135,7 @@ namespace AutoItemPack.Common
                 {
                     guidstr = sdr["Guid"].ToString();
                 }
-                if (guidstr == RegistryStorageKeys.StartGUIDKeyStr)
+                if (guidstr == RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationGUIDKey))
                 {
                     return false;
                 }
@@ -142,7 +145,7 @@ namespace AutoItemPack.Common
 
         public static void CreateFileTable()
         {
-            using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
+            using (SqlConnection conn = new SqlConnection(RegistryStorageHelper.CommonConnSQLStr()))
             {
                 conn.Open();
                 string sql = $" CREATE TABLE [dbo].[UpdateFile] (" +
@@ -160,7 +163,7 @@ namespace AutoItemPack.Common
 
         public static bool IsTable()
         {
-            using (SqlConnection conn = new SqlConnection(PathHelpStatus.ConnSQLStr))
+            using (SqlConnection conn = new SqlConnection(RegistryStorageHelper.CommonConnSQLStr()))
             {
                 conn.Open();
                 String sql = $" select count(1) as TableCount   from information_schema.TABLES where TABLE_NAME = 'UpdateFile' ";

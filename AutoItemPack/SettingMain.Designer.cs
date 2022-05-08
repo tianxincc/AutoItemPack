@@ -240,6 +240,7 @@
             this.textLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textLog.Size = new System.Drawing.Size(141, 246);
             this.textLog.TabIndex = 2;
+            this.textLog.TextChanged += new System.EventHandler(this.textLog_TextChanged);
             // 
             // panel1
             // 

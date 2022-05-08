@@ -20,31 +20,31 @@ namespace AutoItemPack.Common
         /// <summary>
         /// Ftp服务器ip
         /// </summary>
-        public static string FtpServerIP = RegistryStorageKeys.StartFTPIPKeyStr;
+        public static string FtpServerIP = RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPIPKey);
 
         /// <summary>
         /// Ftp 端口
         /// </summary>
-        public static string FtpPort = RegistryStorageKeys.StartFTPPortKeyStr;
+        public static string FtpPort = RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPPortKey) ;
 
         /// <summary>
         /// Ftp 路径
         /// </summary>
-        public static string FtpPath = RegistryStorageKeys.StartPathKeyStr;
+        public static string FtpPath = RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StartPathKey) ;
 
 
         /// <summary>
         /// Ftp 指定用户名
         /// </summary>
-        public static string FtpUserID = RegistryStorageKeys.StartFTPUserKeyStr;
+        public static string FtpUserID = RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPUserKey);
 
 
         /// <summary>
         /// Ftp 指定用户密码
         /// </summary>
-        public static string FtpPassword = RegistryStorageKeys.StartFTPPwdKeyStr;
+        public static string FtpPassword = RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPPwdKey);
 
-        public static string ftpURI = PathHelpStatus.ConnIPStr;
+        public static string ftpURI = RegistryStorageHelper.CommonConnIPStr();
             //$"ftp://{FtpServerIP}/{FtpPath}/test"; 
 
         #endregion

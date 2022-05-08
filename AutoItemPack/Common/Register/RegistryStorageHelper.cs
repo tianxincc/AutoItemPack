@@ -11,84 +11,17 @@ namespace Common.Register
     /// </summary>
     public static class RegistryStorageHelper
     {
-        /// <summary>
-        /// 设置上次登录的站点
-        /// </summary>
-        /// <param name="station"></param>
-        //public static void SetLoginStationToReg(Station station)
-        //{
-        //    SetValueToReg(RegistryStorageKeys.StationKey, station);
-        //}
 
-        /// <summary>
-        /// 获取上次登录的站点
-        /// </summary>
-        /// <returns></returns>
-        //public static int GetLoginStationFromReg()
-        //{
-        //    return GetValueFromReg<int>(RegistryStorageKeys.StationKey);
-        //}
 
-        /// <summary>
-        /// 设置上次登录的病理库
-        /// </summary>
-        /// <param name="station"></param>
-        //public static void SetLastMedicalDB(CaseDbType dbtype)
-        //{
-        //    SetValueToReg(RegistryStorageKeys.LastMedicalDB, (int)dbtype);
-        //}
+        public static string CommonConnSQLStr() 
+        {
+            return $"Data Source = {RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationSQLIPKey)}; Initial Catalog = {RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationSQLDBKey)}; Integrated Security = false; User ID = { RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationSQLUserKey)}; Password={RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationSQLPwdKey)}";
+        }
 
-        /// <summary>
-        /// 获取上次登录的病理库
-        /// </summary>
-        /// <returns></returns>
-        //public static int GetLastMedicalDB()
-        //{
-        //    var result = GetValueFromReg<int>(RegistryStorageKeys.LastMedicalDB);
-        //    return result == 0 ? (int)CaseDbType.Common : result;
-        //}
-
-        //public static void SetLoginUserNameFromReg(string userName)
-        //{
-        //    //如果test不调用 就可以删掉了
-        //    SetValueToReg(RegistryStorageKeys.UserNameKey, userName);
-        //}
-
-        //public static void AddUserToReg(string name, string password)
-        //{
-        //    SetValueToReg(RegistryStorageKeys.UserNameKey, name);
-        //    SetValueToReg(RegistryStorageKeys.UserPasswordKey, password);
-
-        //    string allUsers = GetAllUsersFromReg();
-
-        //    if (!string.IsNullOrEmpty(allUsers))
-        //    {
-        //        string newUser = name + "|" + password;
-        //        if (!allUsers.Contains(newUser))
-        //        {
-        //            allUsers += "," + newUser;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        allUsers = name + "|" + password;
-        //    }
-        //    SetValueToReg(RegistryStorageKeys.AllUsersKey, allUsers);
-
-        //}
-        //public static string GetLoginUserNameFromReg()
-        //{
-        //    return GetValueFromReg<string>(RegistryStorageKeys.UserNameKey);
-        //}
-        //public static string GetLoginPasswordFromReg()
-        //{
-        //    return GetValueFromReg<string>(RegistryStorageKeys.UserPasswordKey);
-        //}
-
-        //public static string GetAllUsersFromReg()
-        //{
-        //    return GetValueFromReg<string>(RegistryStorageKeys.AllUsersKey);
-        //}
+        public static string CommonConnIPStr() 
+        {
+            return $@"ftp://{RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPIPKey) }:{RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPPortKey)}/{RegistryStorageHelper.GetValueFromReg<string>(RegistryStorageKeys.StationFTPPathKey)}";
+        }
 
 
         //下方为通用方法，如不需要封装可以简单调用

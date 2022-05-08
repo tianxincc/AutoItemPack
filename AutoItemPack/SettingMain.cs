@@ -59,21 +59,21 @@ namespace AutoItemPack
         /// <param name="e"></param>
         private void btnInIt_Click(object sender, EventArgs e)
         {
-            try
-            {
-                LoadReg();
-                if (SQLHelper.IsTable()) 
-                {
-                    SaveLog($"缺少重要数据文件，正在创建...");
-                    SQLHelper.CreateFileTable();
-                }
-                SaveLog($"初始化成功。");
-            }
-            catch (Exception ex)
-            {
-                SaveLog($"初始化数据异常{ex}");
-            }
-            
+            FtpHelper.Delete("");
+            //try
+            //{
+            //    LoadReg();
+            //    if (SQLHelper.IsTable())
+            //    {
+            //        SaveLog($"缺少重要数据文件，正在创建...");
+            //        SQLHelper.CreateFileTable();
+            //    }
+            //    SaveLog($"初始化成功。");
+            //}
+            //catch (Exception ex)
+            //{
+            //    SaveLog($"初始化数据异常{ex}");
+            //}
         }
 
         /// <summary>
@@ -94,17 +94,18 @@ namespace AutoItemPack
         /// <param name="e"></param>
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            if (RegistryStorageKeys.StationFTPKeyStr.Equals(RegistryStorageKeys.KeyY)) 
+            if (GetRegValue(RegistryStorageKeys.StationFTPKey).Equals(RegistryStorageKeys.KeyY)) 
             {
-                GetFileSave(new DirectoryInfo(PathHelpStatus.Path), RegistryStorageKeys.StationFTPKey);
+
+                GetFileSave(new DirectoryInfo(PathHelpStatus.Path), GetRegValue(RegistryStorageKeys.StationFTPKey));
                 ObjectToJson("FilePath", fTPFileUoloads);
                 SaveLog("已保存文件到FTP远端");
             }
 
-            if (RegistryStorageKeys.StationSQLKeyStr.Equals(RegistryStorageKeys.KeyY))
+            if (GetRegValue(RegistryStorageKeys.StationSQLKey).Equals(RegistryStorageKeys.KeyY))
             {
                 SQLHelper.BtnDeleteFile();
-                GetFileSave(new DirectoryInfo(PathHelpStatus.Path), RegistryStorageKeys.StationSQLKey);
+                GetFileSave(new DirectoryInfo(PathHelpStatus.Path), GetRegValue(RegistryStorageKeys.StationSQLKey));
                 SaveLog("已保存文件到SQL远端");
             }
         }
@@ -116,14 +117,14 @@ namespace AutoItemPack
         /// <param name="e"></param>
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            if (RegistryStorageKeys.StationFTPKeyStr.Equals(RegistryStorageKeys.KeyY))
+            if (GetRegValue(RegistryStorageKeys.StationFTPKey).Equals(RegistryStorageKeys.KeyY))
             {
 
                 SQLHelper.BtnUpdateFileToFTP();
                 
             }
 
-            if (RegistryStorageKeys.StationSQLKeyStr.Equals(RegistryStorageKeys.KeyY))
+            if (GetRegValue(RegistryStorageKeys.StationSQLKey).Equals(RegistryStorageKeys.KeyY))
             {
                 if (SQLHelper.BtnIsDownload()) 
                 {
@@ -168,8 +169,8 @@ namespace AutoItemPack
 
         private void JoinPath() 
         {
-            textftppth.Text = PathHelpStatus.ConnIPStr;
-            textsqlpath.Text = PathHelpStatus.ConnSQLStr;
+            textftppth.Text = RegistryStorageHelper.CommonConnIPStr();
+            textsqlpath.Text = RegistryStorageHelper.CommonConnSQLStr();
         }
 
         private void LoadStart() 
@@ -216,7 +217,7 @@ namespace AutoItemPack
             FileInfo[] files = dirpath.GetFiles();
             DirectoryInfo[] directories = dirpath.GetDirectories();
             var pathname = dirpath.FullName.Replace($"{PathHelpStatus.Path}", "");
-            if (RegistryStorageKeys.StationFTPKeyStr.Equals(startStr)) 
+            if (GetRegValue(RegistryStorageKeys.StationFTPKey).Equals(startStr)) 
             {
                 if (!string.IsNullOrEmpty(pathname))
                 {
@@ -230,12 +231,12 @@ namespace AutoItemPack
                     continue;
                 }
 
-                if (RegistryStorageKeys.StationFTPKeyStr.Equals(startStr)) 
+                if (GetRegValue(RegistryStorageKeys.StationFTPKey).Equals(startStr)) 
                 {
                     fTPFileUoloads.Add(new FTPFileUoload { FileName = $"{Path.Combine(pathname, item.Name)}", FilePath = $"{pathname}" });
-                    FtpHelper.FtpUploadBroken($"{dirpath}/{item.Name}", $"{Path.Combine(RegistryStorageKeys.StartPathKeyStr, pathname)}");
+                    FtpHelper.FtpUploadBroken($"{dirpath}/{item.Name}", $"{Path.Combine(GetRegValue(RegistryStorageKeys.StartPathKey), pathname)}");
                 }
-                if (RegistryStorageKeys.StationSQLKeyStr.Equals(startStr)) 
+                if (GetRegValue(RegistryStorageKeys.StationSQLKey).Equals(startStr)) 
                 {
                     var infbytes = File.ReadAllBytes(dirpath + "\\" + item.Name);
                     SQLHelper.Save(infbytes, $"{pathname}{item.Name}", DateTime.Now.ToString("yyyy-mm-dd HH:mm:ss"), pathname);
@@ -277,12 +278,19 @@ namespace AutoItemPack
             }
             Json.Append("]}");
             File.WriteAllText($@"{PathHelpStatus.Path}\downloadPath.txt", Json.ToString());
-            FtpHelper.FtpUploadBroken($@"{PathHelpStatus.Path}\downloadPath.txt", RegistryStorageKeys.StartFTPPathKeyStr);
-            //return Json.ToString();
-
+            FtpHelper.FtpUploadBroken($@"{PathHelpStatus.Path}\downloadPath.txt", GetRegValue(RegistryStorageKeys.StationFTPPathKey));
         }
 
 
+        public static string GetRegValue(string key)
+        {
+            return RegistryStorageHelper.GetValueFromReg<string>(key);
+        }
 
+        private void textLog_TextChanged(object sender, EventArgs e)
+        {
+            this.textLog.SelectionStart = this.textLog.Text.Length;
+            this.textLog.ScrollToCaret();
+        }
     }
 }

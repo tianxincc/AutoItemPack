@@ -8,90 +8,84 @@ namespace Common.Register
     public static class RegistryStorageKeys
     {
         //注册表根路径
-        public static readonly string RegPath = @"SOFTWARE\AutoItemPack";
+        public static string RegPath = @"SOFTWARE\AutoItemPack";
 
         //FTP模式
-        public static readonly string StationFTPKey = "FTP模式";
-        public static readonly string StationFTPKeyStr = GetRegValue(StationFTPKey);
+        public static string StationFTPKey = "FTP模式";
+        //public static string StationFTPKeyStr = GetRegValue(StationFTPKey);
 
 
         //FTPIP
-        public static readonly string StationFTPIPKey = "FTPIP";
-        public static readonly string StartFTPIPKeyStr = GetRegValue(StationFTPIPKey);
+        public static string StationFTPIPKey = "FTPIP";
+        //public static string StartFTPIPKeyStr = GetRegValue(StationFTPIPKey);
 
 
         //FTP路径
-        public static readonly string StationFTPPathKey = "FTP路径";
-        public static readonly string StartFTPPathKeyStr = GetRegValue(StationFTPPathKey);
-
+        public static string StationFTPPathKey = "FTP路径";
+        //public static string StartFTPPathKeyStr = GetRegValue(StationFTPPathKey,2);
+        
 
         //FTP端口
-        public static readonly string StationFTPPortKey = "FTP端口";
-        public static readonly string StartFTPPortKeyStr = GetRegValue(StationFTPPortKey);
+        public static string StationFTPPortKey = "FTP端口";
+        //public static string StartFTPPortKeyStr = GetRegValue(StationFTPPortKey);
 
         //FTP用户
-        public static readonly string StationFTPUserKey = "FTP账户";
-        public static readonly string StartFTPUserKeyStr = GetRegValue(StationFTPUserKey);
+        public static string StationFTPUserKey = "FTP账户";
+        //public static string StartFTPUserKeyStr = GetRegValue(StationFTPUserKey);
 
 
         //FTP密码
-        public static readonly string StationFTPPwdKey = "FTP密码";
-        public static readonly string StartFTPPwdKeyStr = GetRegValue(StationFTPPwdKey);
+        public static string StationFTPPwdKey = "FTP密码";
+        //public static string StartFTPPwdKeyStr = GetRegValue(StationFTPPwdKey);
 
 
         //SQL模式
-        public static readonly string StationSQLKey = "SQL模式";
-        public static readonly string StationSQLKeyStr = GetRegValue(StationSQLKey);
+        public static string StationSQLKey = "SQL模式";
+        //public static string StationSQLKeyStr = GetRegValue(StationSQLKey);
 
         //SQLIP
-        public static readonly string StationSQLIPKey = "SQLIP";
-        public static readonly string StartSQLIPKeyStr = GetRegValue(StationSQLIPKey);
+        public static string StationSQLIPKey = "SQLIP";
+        //public static string StartSQLIPKeyStr = GetRegValue(StationSQLIPKey);
 
 
         //SQLDB
-        public static readonly string StationSQLDBKey = "SQLDB";
-        public static readonly string StartSQLDBKeyStr = GetRegValue(StationSQLDBKey);
+        public static string StationSQLDBKey = "SQLDB";
+        //public static string StartSQLDBKeyStr = GetRegValue(StationSQLDBKey);
 
 
         //SQLUser
-        public static readonly string StationSQLUserKey = "SQL账户";
-        public static readonly string StartSQLUserKeyStr = GetRegValue(StationSQLUserKey);
+        public static string StationSQLUserKey = "SQL账户";
+        //public static string StartSQLUserKeyStr = GetRegValue(StationSQLUserKey);
 
 
         //SQLPwd
-        public static readonly string StationSQLPwdKey = "SQL密码";
-        public static readonly string StartSQLPwdKeyStr = GetRegValue(StationSQLPwdKey);
+        public static string StationSQLPwdKey = "SQL密码";
+        //public static string StartSQLPwdKeyStr = GetRegValue(StationSQLPwdKey);
 
 
         //启动项目
-        public static readonly string StationStartKey = "启动项目";
-        public static readonly string StationStartKeyStr = GetRegValue(StationStartKey);
+        public static string StationStartKey = "启动项目";
+        //public static string StationStartKeyStr = GetRegValue(StationStartKey);
 
 
         //FTP路径
-        public static readonly string StartPathKey = "FTP路径";
-        public static readonly string StartPathKeyStr = GetRegValue(StartPathKey);
+        public static string StartPathKey = "FTP路径";
+        //public static string StartPathKeyStr = GetRegValue(StartPathKey);
 
 
         //启动应用程序
-        public static readonly string StationItemKey = "跟随启动";
-        public static readonly string StartItemKeyStr = GetRegValue(StationItemKey);
+        public static string StationItemKey = "跟随启动";
+        //public static string StartItemKeyStr = GetRegValue(StationItemKey);
 
         //GUID
-        public static readonly string StationGUIDKey = "GUID";
-        public static readonly string StartGUIDKeyStr = GetRegValue(StationGUIDKey);
+        public static string StationGUIDKey = "GUID";
+        //public static string StartGUIDKeyStr = GetRegValue(StationGUIDKey);
 
 
-        public static readonly string KeyY = "是";
+        public static string KeyY = "是";
 
-        public static readonly string KeyN = "否";
+        public static string KeyN = "否";
 
-
-
-        public static string GetRegValue(string key)
-        {
-            return RegistryStorageHelper.GetValueFromReg<string>(key);
-        }
 
     }
 }
