@@ -60,7 +60,6 @@
             this.txtGUID = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.panel42 = new System.Windows.Forms.Panel();
-            this.label22 = new System.Windows.Forms.Label();
             this.panel41 = new System.Windows.Forms.Panel();
             this.txtIsStart = new System.Windows.Forms.TextBox();
             this.panel34 = new System.Windows.Forms.Panel();
@@ -143,7 +142,6 @@
             this.panel5.SuspendLayout();
             this.panel14.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
-            this.panel42.SuspendLayout();
             this.panel41.SuspendLayout();
             this.panel34.SuspendLayout();
             this.panel13.SuspendLayout();
@@ -516,7 +514,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 6;
-            this.label5.Text = "启动调式";
+            this.label5.Text = "后台执行";
             // 
             // panel14
             // 
@@ -588,25 +586,12 @@
             // panel42
             // 
             this.tableLayoutPanel9.SetColumnSpan(this.panel42, 4);
-            this.panel42.Controls.Add(this.label22);
             this.panel42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel42.Location = new System.Drawing.Point(3, 138);
             this.panel42.Margin = new System.Windows.Forms.Padding(2);
             this.panel42.Name = "panel42";
             this.panel42.Size = new System.Drawing.Size(316, 87);
             this.panel42.TabIndex = 21;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.label22.Location = new System.Drawing.Point(8, 10);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(239, 60);
-            this.label22.TabIndex = 11;
-            this.label22.Text = "1. 配置存储注册表中，导出可复用配置\r\n2. 清空操作：删除当前链接远端的所有文件\r\n3. 启动调式：下次是否继续打开DEBUG页面\r\n4. 启动项目：后台默认" +
-    "调用\r\n5. 跟随启动：启动完成后打开指定应用\r\n";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel41
             // 
@@ -1044,9 +1029,9 @@
             this.label4.ForeColor = System.Drawing.SystemColors.Desktop;
             this.label4.Location = new System.Drawing.Point(37, 6);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 2;
-            this.label4.Text = "系统设置栏";
+            this.label4.Text = "执行模式";
             // 
             // panel15
             // 
@@ -1314,8 +1299,6 @@
             this.panel14.ResumeLayout(false);
             this.panel14.PerformLayout();
             this.tableLayoutPanel9.ResumeLayout(false);
-            this.panel42.ResumeLayout(false);
-            this.panel42.PerformLayout();
             this.panel41.ResumeLayout(false);
             this.panel41.PerformLayout();
             this.panel34.ResumeLayout(false);
@@ -1476,7 +1459,6 @@
         private System.Windows.Forms.TextBox txtFTPPort;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel42;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txtGUID;
     }
 }

@@ -545,28 +545,33 @@ namespace AutoItemPack.Common
             try
             {
                 StringBuilder result = new StringBuilder();
+                //List<string> lines = new List<string>();
                 FtpWebRequest ftp;
                 ftp = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI));
                 ftp.Credentials = new NetworkCredential(FtpUserID, FtpPassword);
                 ftp.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
                 WebResponse response = ftp.GetResponse();
-                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.Default);
+                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
                 string line = reader.ReadLine();
-
                 while (line != null)
                 {
                     result.Append(line);
                     result.Append("\n");
+                    //string[] tokens =line.Split(new[] { ' ' }, 9, StringSplitOptions.RemoveEmptyEntries);
+                    //lines.Add(tokens[8]);
                     line = reader.ReadLine();
                 }
+
+
                 result.Remove(result.ToString().LastIndexOf("\n"), 1);
                 reader.Close();
                 response.Close();
+                //return lines.ToArray();
                 return result.ToString().Split('\n');
             }
             catch (Exception ex)
             {
-                downloadFiles = null;
+                //downloadFiles = null;
                 throw ex;
             }
         }
@@ -663,6 +668,7 @@ namespace AutoItemPack.Common
             try
             {
                 string uri = ftpURI + fileName;
+                //string uri = "ftp://" + FtpServerIP + "/" + fileName ;
                 FtpWebRequest reqFTP;
                 reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri));
 
@@ -876,6 +882,56 @@ namespace AutoItemPack.Common
             ftpURI = "ftp://" + FtpServerIP + "/" + ftpRemotePath + "/";
         }
         #endregion
+
+
+        /// <summary>
+        /// 清空当前目录
+        /// </summary>
+        /// <returns></returns>
+        public static void GetEmptyFiles()
+        {
+            try
+            {
+                StringBuilder result = new StringBuilder();
+                List<string> lines = new List<string>();
+                FtpWebRequest ftp;
+                ftp = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI));
+                ftp.Credentials = new NetworkCredential(FtpUserID, FtpPassword);
+                ftp.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+                WebResponse response = ftp.GetResponse();
+                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                string line = reader.ReadLine();
+                while (line != null)
+                {
+                    result.Append(line);
+                    result.Append("\n");
+                    string[] tokens = line.Split(new[] { ' ' }, 9, StringSplitOptions.RemoveEmptyEntries);
+                    lines.Add(tokens[8]);
+                    line = reader.ReadLine();
+                }
+
+                foreach (var item in lines)
+                {
+                    if (item.Contains("."))
+                    {
+                        Delete($@"/{item}");
+                    }
+                    else 
+                    {
+                        RemoveDirectory($@"/{item}");
+                    }
+                }
+
+                result.Remove(result.ToString().LastIndexOf("\n"), 1);
+                reader.Close();
+                response.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
     }
 }

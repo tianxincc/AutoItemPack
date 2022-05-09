@@ -59,21 +59,20 @@ namespace AutoItemPack
         /// <param name="e"></param>
         private void btnInIt_Click(object sender, EventArgs e)
         {
-            FtpHelper.Delete("");
-            //try
-            //{
-            //    LoadReg();
-            //    if (SQLHelper.IsTable())
-            //    {
-            //        SaveLog($"缺少重要数据文件，正在创建...");
-            //        SQLHelper.CreateFileTable();
-            //    }
-            //    SaveLog($"初始化成功。");
-            //}
-            //catch (Exception ex)
-            //{
-            //    SaveLog($"初始化数据异常{ex}");
-            //}
+            try
+            {
+                LoadReg();
+                if (SQLHelper.IsTable())
+                {
+                    SaveLog($"缺少重要数据文件，正在创建...");
+                    SQLHelper.CreateFileTable();
+                }
+                SaveLog($"初始化成功。");
+            }
+            catch (Exception ex)
+            {
+                SaveLog($"初始化数据异常{ex}");
+            }
         }
 
         /// <summary>
@@ -85,6 +84,8 @@ namespace AutoItemPack
         {
             SQLHelper.BtnDeleteFile();
             SaveLog("当前SQL链接远程文件已清空");
+            FtpHelper.GetEmptyFiles();
+            SaveLog("FTP链接远程文件已清空");
         }
 
         /// <summary>
@@ -119,9 +120,7 @@ namespace AutoItemPack
         {
             if (GetRegValue(RegistryStorageKeys.StationFTPKey).Equals(RegistryStorageKeys.KeyY))
             {
-
                 SQLHelper.BtnUpdateFileToFTP();
-                
             }
 
             if (GetRegValue(RegistryStorageKeys.StationSQLKey).Equals(RegistryStorageKeys.KeyY))

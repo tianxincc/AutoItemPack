@@ -84,7 +84,7 @@ namespace AutoItemPack.Common
         }
 
         /// <summary>
-        /// 数据库获更新
+        /// FTP更新
         /// </summary>
         public static void BtnUpdateFileToFTP()
         {
